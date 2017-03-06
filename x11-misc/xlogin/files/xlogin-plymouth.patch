@@ -1,0 +1,38 @@
+diff -ruN xlogin.orig/xlogin@.service.in xlogin/xlogin@.service.in
+--- xlogin.orig/xlogin@.service.in	2017-03-05 13:22:22.000000000 +0000
++++ xlogin/xlogin@.service.in	2017-03-05 13:24:26.117059992 +0000
+@@ -1,6 +1,7 @@
+ [Unit]
+ Description=Direct X login for user %i
+ After=x@vt7.service systemd-user-sessions.service
++Before=plymouth-quit.service
+ Wants=x@vt7.service
+ Conflicts=getty@tty7.service
+ 
+@@ -11,6 +12,8 @@
+ PAMName=login
+ Environment=XDG_SESSION_TYPE=x11 DISPLAY=:0
+ ExecStart=@bash@ -l .xinitrc
++StandardOutput=null
++StandardError=null
+ 
+ [Install]
+ WantedBy=graphical.target
+diff -ruN xlogin.orig/x@.service xlogin/x@.service
+--- xlogin.orig/x@.service	2017-03-05 13:22:22.000000000 +0000
++++ xlogin/x@.service	2017-03-05 13:26:23.758061024 +0000
+@@ -1,9 +1,13 @@
+ [Unit]
+ Description=X on %I
++Conflicts=getty@tty7.service
+ Wants=graphical.target
+ Before=graphical.target
++After=systemd-user-sessions.service getty@tty7.service plymouth-deactivate.service
+ StopWhenUnneeded=true
+ 
+ [Service]
+ Type=forking
+-ExecStart=/usr/bin/x-daemon -noreset %I
++ExecStart=/usr/bin/x-daemon -background none -noreset -nolisten tcp %I
++StandardOutput=null
++StandardError=null

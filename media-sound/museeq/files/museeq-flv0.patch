@@ -1,0 +1,42 @@
+diff -ruN a/CMakeLists.txt b/CMakeLists.txt
+--- a/CMakeLists.txt	2017-01-30 12:06:10.000000000 +0000
++++ b/CMakeLists.txt	2017-01-30 12:48:37.355121087 +0000
+@@ -4,6 +4,8 @@
+ 
+ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+ 
++enable_language(CXX)
++
+ # Include some cmake checks.
+ include(CheckIncludeFiles)
+ include(CheckTypeSize)
+@@ -13,7 +15,7 @@
+ include(GNUInstallDirs)
+ 
+ # Enable NewNet's smart-pointer debugging capabilities.
+-add_definitions(-DNN_PTR_DEBUG -DNN_PTR_DEBUG_ASSERT)
++add_definitions(-DDATADIR="${CMAKE_INSTALL_FULL_DATADIR}")
+ 
+ message("DECLARATIONS:
+ Package options: EVERYTHING, MURMUR, MUCOUS, CLIENTS, BINDINGS
+diff -ruN a/museeq/CMakeLists.txt b/museeq/CMakeLists.txt
+--- a/museeq/CMakeLists.txt	2017-01-30 12:06:10.000000000 +0000
++++ b/museeq/CMakeLists.txt	2017-01-30 12:49:36.908457921 +0000
+@@ -8,7 +8,7 @@
+ # find and setup Qt4 for this project
+ find_package(Qt4 REQUIRED)
+ 
+-add_definitions(${QT_DEFINITIONS} )
++add_definitions(${QT_DEFINITIONS})
+ 
+ # tell cmake where to search for headers:v
+ include_directories(.)
+@@ -17,7 +17,7 @@
+ include(CheckTypeSize)
+ include(CheckCXXSourceCompiles)
+ 
+-add_definitions(-DDATADIR="\""${CMAKE_INSTALL_DATADIR}"\"")
++add_definitions(-DDATADIR="${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATADIR}")
+ 
+ if(BINRELOC)
+     add_definitions(-DENABLE_BINRELOC=1)
