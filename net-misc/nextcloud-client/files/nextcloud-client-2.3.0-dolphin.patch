@@ -1,0 +1,30 @@
+diff -ruN a/client/shell_integration/dolphin/CMakeLists.txt b/client/shell_integration/dolphin/CMakeLists.txt
+--- a/client/shell_integration/dolphin/CMakeLists.txt	2017-03-03 09:11:17.000000000 +0000
++++ b/client/shell_integration/dolphin/CMakeLists.txt	2017-03-16 16:23:31.830939480 +0000
+@@ -51,4 +51,6 @@
+ target_link_libraries(${OWNCLOUDDOLPHINACTIONPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets ${OWNCLOUDDOLPHINHELPER})
+ configure_file(ownclouddolphinactionplugin.desktop.in ${OWNCLOUDDOLPHINACTIONPLUGIN}.desktop ESCAPE_QUOTES @ONLY)
+ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${OWNCLOUDDOLPHINACTIONPLUGIN}.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
++configure_file(ownclouddolphinactionplugin.desktop.in ownclouddolphinactionplugin.desktop ESCAPE_QUOTES @ONLY)
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ownclouddolphinactionplugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR} RENAME ${OWNCLOUDDOLPHINACTIONPLUGIN}.desktop)
+ install(TARGETS ${OWNCLOUDDOLPHINACTIONPLUGIN} DESTINATION ${KDE_INSTALL_PLUGINDIR})
+diff -ruN a/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop b/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop
+--- a/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop	1970-01-01 01:00:00.000000000 +0100
++++ b/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop	2017-03-16 16:25:07.733938056 +0000
+@@ -0,0 +1,6 @@
++[Desktop Entry]
++Type=Service
++Name=@APPLICATION_NAME@Action
++ServiceTypes=KFileItemAction/Plugin
++MimeType=application/octet-stream;inode/directory;
++X-KDE-Library=@APPLICATION_EXECUTABLE@dolphinactionplugin
+diff -ruN a/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop.in b/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop.in
+--- a/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop.in	2017-03-03 09:11:17.000000000 +0000
++++ b/client/shell_integration/dolphin/ownclouddolphinactionplugin.desktop.in	1970-01-01 01:00:00.000000000 +0100
+@@ -1,6 +0,0 @@
+-[Desktop Entry]
+-Type=Service
+-Name=@APPLICATION_NAME@Action
+-ServiceTypes=KFileItemAction/Plugin
+-MimeType=application/octet-stream;inode/directory;
+-X-KDE-Library=@APPLICATION_EXECUTABLE@dolphinactionplugin
